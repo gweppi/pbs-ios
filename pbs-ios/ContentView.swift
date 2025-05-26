@@ -10,9 +10,10 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var vm = VM()
-    @State private var athleteId: String = "5133523"
+    @State private var athleteId: String = ""
     
     @State private var data: Obj?
+    @State private var athletes: [Athlete]?
     @State private var error: Error?
     
     @State private var isSearching = false
@@ -28,6 +29,16 @@ struct ContentView: View {
         do {
             self.data = try await vm.fetch(id: id)
         } catch {
+            print(error)
+            self.error = error
+        }
+    }
+    
+    func search(value: String) async {
+        do {
+            self.athletes = try await vm.search(name: value)
+        } catch {
+            print(error)
             self.error = error
         }
     }
@@ -71,10 +82,27 @@ struct ContentView: View {
             await fetch()
         }
         .onChange(of: athleteId) { _, newValue in
-            Task { await fetch(id: newValue) }
+            if athleteId == "" { return }
+            Task {
+                if newValue.contains(/[0-9]/) { // if the string contains numbers, it is probably an ID
+                    isSearching = false
+                    await fetch(id: newValue)
+                    athleteId = ""
+                    athletes = nil
+                } else {
+                    await search(value: newValue)
+                }
+            }
         }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
-            isSearching = false
+        .searchSuggestions {
+            if let athletes {
+                ForEach(athletes) { athlete in
+                    Text(athlete.lastName + ", " + athlete.firstName)
+                        .searchCompletion(athlete.id)
+                }
+            } else {
+                Text("No search suggestions")
+            }
         }
     }
 }

@@ -6,8 +6,39 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		24B237B32DE477760086AB33 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24B237B22DE477760086AB33 /* UniformTypeIdentifiers.framework */; };
+		24B237BE2DE477760086AB33 /* action.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 24B237B02DE477760086AB33 /* action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		24B237BC2DE477760086AB33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 24B2378C2DE27B670086AB33 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 24B237AF2DE477760086AB33;
+			remoteInfo = action;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		24B237C32DE477760086AB33 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				24B237BE2DE477760086AB33 /* action.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		24B237942DE27B670086AB33 /* pbs-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "pbs-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		24B237B02DE477760086AB33 /* action.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = action.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		24B237B22DE477760086AB33 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -17,6 +48,13 @@
 				Info.plist,
 			);
 			target = 24B237932DE27B670086AB33 /* pbs-ios */;
+		};
+		24B237C22DE477760086AB33 /* Exceptions for "action" folder in "action" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 24B237AF2DE477760086AB33 /* action */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -29,6 +67,14 @@
 			path = "pbs-ios";
 			sourceTree = "<group>";
 		};
+		24B237B42DE477760086AB33 /* action */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				24B237C22DE477760086AB33 /* Exceptions for "action" folder in "action" target */,
+			);
+			path = action;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +85,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		24B237AD2DE477760086AB33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24B237B32DE477760086AB33 /* UniformTypeIdentifiers.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -46,6 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				24B237962DE27B670086AB33 /* pbs-ios */,
+				24B237B42DE477760086AB33 /* action */,
+				24B237B12DE477760086AB33 /* Frameworks */,
 				24B237952DE27B670086AB33 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,8 +110,17 @@
 			isa = PBXGroup;
 			children = (
 				24B237942DE27B670086AB33 /* pbs-ios.app */,
+				24B237B02DE477760086AB33 /* action.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		24B237B12DE477760086AB33 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				24B237B22DE477760086AB33 /* UniformTypeIdentifiers.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -68,10 +133,12 @@
 				24B237902DE27B670086AB33 /* Sources */,
 				24B237912DE27B670086AB33 /* Frameworks */,
 				24B237922DE27B670086AB33 /* Resources */,
+				24B237C32DE477760086AB33 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				24B237BD2DE477760086AB33 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				24B237962DE27B670086AB33 /* pbs-ios */,
@@ -82,6 +149,28 @@
 			productName = "pbs-ios";
 			productReference = 24B237942DE27B670086AB33 /* pbs-ios.app */;
 			productType = "com.apple.product-type.application";
+		};
+		24B237AF2DE477760086AB33 /* action */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 24B237BF2DE477760086AB33 /* Build configuration list for PBXNativeTarget "action" */;
+			buildPhases = (
+				24B237AC2DE477760086AB33 /* Sources */,
+				24B237AD2DE477760086AB33 /* Frameworks */,
+				24B237AE2DE477760086AB33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				24B237B42DE477760086AB33 /* action */,
+			);
+			name = action;
+			packageProductDependencies = (
+			);
+			productName = action;
+			productReference = 24B237B02DE477760086AB33 /* action.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -94,6 +183,9 @@
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					24B237932DE27B670086AB33 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					24B237AF2DE477760086AB33 = {
 						CreatedOnToolsVersion = 16.3;
 					};
 				};
@@ -113,12 +205,20 @@
 			projectRoot = "";
 			targets = (
 				24B237932DE27B670086AB33 /* pbs-ios */,
+				24B237AF2DE477760086AB33 /* action */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		24B237922DE27B670086AB33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24B237AE2DE477760086AB33 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +235,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		24B237AC2DE477760086AB33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		24B237BD2DE477760086AB33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 24B237AF2DE477760086AB33 /* action */;
+			targetProxy = 24B237BC2DE477760086AB33 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		24B2379D2DE27B680086AB33 /* Debug */ = {
@@ -277,8 +392,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,8 +421,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,6 +430,56 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.gwep.pbs-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		24B237C02DE477760086AB33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7GZ9MQAJV5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = action/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = action;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.gwep.pbs-ios.action";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		24B237C12DE477760086AB33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7GZ9MQAJV5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = action/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = action;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.gwep.pbs-ios.action";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -338,6 +503,15 @@
 			buildConfigurations = (
 				24B237A02DE27B680086AB33 /* Debug */,
 				24B237A12DE27B680086AB33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		24B237BF2DE477760086AB33 /* Build configuration list for PBXNativeTarget "action" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24B237C02DE477760086AB33 /* Debug */,
+				24B237C12DE477760086AB33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
