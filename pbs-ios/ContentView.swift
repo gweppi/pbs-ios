@@ -18,6 +18,8 @@ struct ContentView: View {
     
     @State private var isSearching = false
     
+    let debouncer = Debouncer(delay: 0.3)
+    
     init() {
         UISearchBar.appearance().showsCancelButton = false
     }
@@ -83,25 +85,40 @@ struct ContentView: View {
         }
         .onChange(of: athleteId) { _, newValue in
             if athleteId == "" { return }
-            Task {
-                if newValue.contains(/[0-9]/) { // if the string contains numbers, it is probably an ID
-                    isSearching = false
-                    await fetch(id: newValue)
-                    athleteId = ""
-                    athletes = nil
-                } else {
-                    await search(value: newValue)
+            debouncer.run {
+                Task {
+                    if newValue.contains(/[0-9]/) { // if the string contains numbers, it is probably an ID
+                        isSearching = false
+                        await fetch(id: newValue)
+                        athleteId = ""
+                        athletes = nil
+                    } else {
+                        await search(value: newValue)
+                    }
                 }
             }
         }
         .searchSuggestions {
-            if let athletes {
+            if let athletes, !athletes.isEmpty {
                 ForEach(athletes) { athlete in
-                    Text(athlete.lastName + ", " + athlete.firstName)
-                        .searchCompletion(athlete.id)
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(athlete.lastName + ", " + athlete.firstName)
+                                .bold()
+                            
+                            Text("\(athlete.country ?? "") - \(athlete.club ?? "")")
+                        }
+                        
+                        Spacer()
+                        
+                        Text(athlete.dobYear)
+                    }
+                    .searchCompletion(athlete.id)
+                    .foregroundStyle(.primary)
                 }
             } else {
                 Text("No search suggestions")
+                    .foregroundStyle(.secondary)
             }
         }
     }

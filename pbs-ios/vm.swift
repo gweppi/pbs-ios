@@ -16,6 +16,25 @@ enum VMError: Error {
 @Observable
 class VM {
     
+    enum Endpoint {
+        case pbs, search
+    }
+    
+    func urlString(for endpoint: Endpoint) -> String {
+        #if targetEnvironment(simulator)
+            let base = "http://localhost:8080"
+        #else
+            let base = Bundle.main.object(forInfoDictionaryKey: "API_ENDPOINT") as? String ?? ""
+        #endif
+        
+        switch endpoint {
+        case .pbs:
+            return base + "/?athleteId="
+        case .search:
+            return base + "/search?name="
+        }
+    }
+    
     func fetch(id: String) async throws -> Obj {
         var url: URL?
         #if targetEnvironment(simulator)
@@ -52,7 +71,7 @@ class VM {
     func search(name: String) async throws -> [Athlete] {
         var url: URL?
         #if targetEnvironment(simulator)
-            url = URL(string: "http://localhost:8080/?athleteId=\(name)")
+            url = URL(string: "http://localhost:8080/search?name=\(name)")
         #else
 //        Get url from Secrets.xcconfig
             if let baseUrl = Bundle.main.object(forInfoDictionaryKey: "API_ENDPOINT") as? String {
