@@ -9,10 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var vm = VM()
-    @State private var athleteId: String = ""
+    @State private var vm = ViewModel()
+    @State private var athleteId: String
+    @State private var searchText: String = ""
     
-    @State private var data: Obj?
+    @State private var pbs: PBS?
     @State private var athletes: [Athlete]?
     @State private var error: Error?
     
@@ -20,16 +21,13 @@ struct ContentView: View {
     
     let debouncer = Debouncer(delay: 0.3)
     
-    init() {
-        UISearchBar.appearance().showsCancelButton = false
+    init(athleteId: String = "5133523") {
+        self.athleteId = athleteId
     }
     
-    func fetch(id: String = "5133523") async {
-//        Valid ids have a length of seven, this reduces the number of calls to the api
-        if id.count < 7 { return }
-        
+    func fetch() async {
         do {
-            self.data = try await vm.fetch(id: id)
+            self.pbs = try await vm.fetch(id: athleteId)
         } catch {
             print(error)
             self.error = error
@@ -46,9 +44,9 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
-            if data != nil {
-                List(data?.pbs ?? [], id: \.self) { pb in
+        NavigationStack {
+            if pbs != nil {
+                List(pbs?.pbs ?? [], id: \.self) { pb in
                     HStack {
                         VStack(alignment: .leading) {
                             Text(pb.event)
@@ -65,11 +63,11 @@ struct ContentView: View {
                         Text(pb.date)
                     }
                 }
-                .navigationTitle("\(data?.info.lastName ?? ""), \(data?.info.firstName ?? "")")
+                .navigationTitle("\(pbs?.info.lastName ?? ""), \(pbs?.info.firstName ?? "")")
                 .onTapGesture { isSearching = false }
             } else {
                 if let error {
-                    if let pbError = error as? PBError {
+                    if let pbError = error as? FetchError {
                         Text(pbError.error)
                     } else {
                         Text(error.localizedDescription)
@@ -79,41 +77,44 @@ struct ContentView: View {
                 }
             }
         }
-        .searchable(text: $athleteId, isPresented: $isSearching)
-        .task {
-            await fetch()
-        }
-        .onChange(of: athleteId) { _, newValue in
-            if athleteId == "" { return }
+        .searchable(text: $searchText, isPresented: $isSearching)
+        .onChange(of: searchText) { _, newValue in
+            if searchText == "" { return }
             debouncer.run {
                 Task {
-                    if newValue.contains(/[0-9]/) { // if the string contains numbers, it is probably an ID
-                        isSearching = false
-                        await fetch(id: newValue)
-                        athleteId = ""
-                        athletes = nil
-                    } else {
-                        await search(value: newValue)
-                    }
+                    await search(value: newValue)
                 }
             }
+        }
+        .task {
+            await fetch()
         }
         .searchSuggestions {
             if let athletes, !athletes.isEmpty {
                 ForEach(athletes) { athlete in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(athlete.lastName + ", " + athlete.firstName)
-                                .bold()
-                            
-                            Text("\(athlete.country ?? "") - \(athlete.club ?? "")")
+                    Button {
+                        Task {
+                            self.pbs = nil
+                            self.athleteId = athlete.id
+                            self.isSearching = false
+                            await fetch()
+                            self.searchText = ""
+                            self.athletes = nil
                         }
-                        
-                        Spacer()
-                        
-                        Text(athlete.dobYear)
+                    } label : {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(athlete.lastName + ", " + athlete.firstName)
+                                    .bold()
+                                
+                                Text("\(athlete.country ?? "") - \(athlete.club ?? "")")
+                            }
+                            
+                            Spacer()
+                            
+                            Text(athlete.dobYear)
+                        }
                     }
-                    .searchCompletion(athlete.id)
                     .foregroundStyle(.primary)
                 }
             } else {
