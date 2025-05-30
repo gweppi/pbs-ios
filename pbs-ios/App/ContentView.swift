@@ -45,26 +45,30 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            if pbs != nil {
-                List(pbs?.pbs ?? [], id: \.self) { pb in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(pb.event)
-                            HStack {
-                                Text(pb.time)
-                                    .bold()
-                                Text("|")
-                                Text(pb.course)
+            if let pbs = pbs, !pbs.pbs.isEmpty {
+                List(pbs.pbs, id: \.self) { pb in
+                    NavigationLink(destination: StyleView(athleteId: athleteId, styleId: pb.styleId, course: pb.course)) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(pb.event)
+                                HStack {
+                                    Text(pb.time)
+                                        .bold()
+                                    Text("|")
+                                    Text(pb.course)
+                                        .foregroundStyle(.secondary)
+                                }
                             }
+                            
+                            Spacer()
+                            
+                            Text(pb.date)
                         }
-                        
-                        Spacer()
-                        
-                        Text(pb.date)
                     }
+                    
                 }
-                .navigationTitle("\(pbs?.info.lastName ?? ""), \(pbs?.info.firstName ?? "")")
-                .onTapGesture { isSearching = false }
+                .navigationTitle("\(pbs.info.lastName), \(pbs.info.firstName)")
+                .navigationBarTitleDisplayMode(.inline)
             } else {
                 if let error {
                     if let pbError = error as? FetchError {
@@ -122,6 +126,7 @@ struct ContentView: View {
                     .foregroundStyle(.secondary)
             }
         }
+        .environment(vm)
     }
 }
 

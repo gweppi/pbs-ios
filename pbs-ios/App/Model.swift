@@ -19,7 +19,8 @@ struct PersonalBest: Codable, Hashable {
     let pts: String
     let date: String
     let city: String
-    let name: String
+    let name: String?
+    let styleId: String
 }
 
 struct Athlete: Codable, Hashable, Identifiable {

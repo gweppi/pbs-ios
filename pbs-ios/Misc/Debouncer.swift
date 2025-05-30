@@ -12,9 +12,9 @@ class Debouncer {
     private let queue: DispatchQueue
     private let delay: TimeInterval
 
-    init(delay: TimeInterval, queue: DispatchQueue = .main) {
+    init(delay: TimeInterval) {
         self.delay = delay
-        self.queue = queue
+        self.queue = DispatchQueue(label: "dev.gwep.pbs")
     }
 
     func run(action: @escaping () -> Void) {

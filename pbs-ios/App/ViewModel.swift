@@ -11,7 +11,7 @@ import Foundation
 class ViewModel {
     
     private enum Endpoint {
-        case pbs, search
+        case pbs, search, style(athleteId: String, styleId: String, course: String)
     }
     
     private func urlString(for endpoint: Endpoint) -> String {
@@ -26,6 +26,8 @@ class ViewModel {
             return base + "/?athleteId="
         case .search:
             return base + "/search?name="
+        case .style(let athleteId, let styleId, let course):
+            return base + "/style?" + "athleteId=\(athleteId)&styleId=\(styleId)&course=\(course)"
         }
     }
     
@@ -65,6 +67,17 @@ class ViewModel {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         let decoded = try decode(data, from: response, successType: [Athlete].self)
+        return decoded
+    }
+    
+    func style(athleteId: String, styleId: String, course: String) async throws -> [PersonalBest] {
+        let url = URL(string: urlString(for: .style(athleteId: athleteId, styleId: styleId, course: course)))
+        guard let url else { throw VMError.urlWrong }
+        
+        let request = URLRequest(url: url)
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        let decoded = try decode(data, from: response, successType: [PersonalBest].self)
         return decoded
     }
 }
